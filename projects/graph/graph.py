@@ -100,6 +100,7 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
+        '''
         # Create an empty Queue and enqueue a PATH TO the starting vertex
         q = Queue()
         q.enqueue((starting_vertex, [starting_vertex]))
@@ -134,19 +135,19 @@ class Graph:
                 # Then add A PATH TO all of its neighbors to the back of the queue
                 for neighbor in self.vertices[v]:
                     # Copy the path
+                    path_copy = list(p)
                     # Append the neighbor to the back of the copy
                     # Enqueue copy
-                    p.append(neighbor)
-                    if p[-1] == destination_vertex:
-                        return p
-                    q.enqueue(p)
-        '''
+                    path_copy.append(neighbor)
+                    q.enqueue(path_copy)
+        
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
+        '''
         s = Stack()
         s.push((starting_vertex, [starting_vertex]))
         while s.size() > 0:
@@ -156,7 +157,33 @@ class Graph:
                     return path + [neighbor]
                 else:
                     s.push((neighbor, path + [neighbor]))
-
+        '''
+        # Create an empty set to store visited nodes
+        visited = set()
+        # Create an empty Stack and push A PATH TO the starting vertex
+        s = Stack()
+        s.push( [starting_vertex] )
+        # While the stack is not empty...
+        while s.size() > 0:
+            # Pop the first PATH
+            path = s.pop()
+            # GRAB THE VERTEX FROM THE END OF THE PATH
+            v = path[-1]
+            # IF VERTEX == TARGET, RETURN PATH
+            if v == destination_vertex:
+                return path
+            # If that vertex has not been visited...
+            if v not in visited:
+                # Mark it as visited
+                visited.add(v)
+                # Then add A PATH TO all of its neighbors to the top of the stack
+                for neighbor in self.vertices[v]:
+                    # Copy the path
+                    path_copy = list(path)
+                    # Append neighbor to the back of the copy
+                    path_copy.append(neighbor)
+                    # Enqueue copy
+                    s.push(path_copy)
 
 
 
