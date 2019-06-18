@@ -100,37 +100,63 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
+        # Create an empty Queue and enqueue a PATH TO the starting vertex
+        q = Queue()
+        q.enqueue((starting_vertex, [starting_vertex]))
+        # While the Queue is not empty...
+        while q.size() > 0:
+            # Dequeue the first PATH
+            (vertex, path) = q.dequeue()
+            for neighbor in self.vertices[vertex] - set(path):
+                if neighbor == destination_vertex:
+                    return path + [neighbor]
+                else:
+                    q.enqueue((neighbor, path + [neighbor]))
+        '''
         # Create an empty set to store visited nodes
         visited = set()
         # Create an empty Queue and enqueue A PATH TO the starting vertex
         q = Queue()
-        q.enqueue([starting_vertex, destination_vertex])
+        q.enqueue([starting_vertex])
         # While the queue is not empty...
         while q.size() > 0:
             # Dequeue the first PATH
             p = q.dequeue()
             # GRAB THE VERTEX FROM THE END OF THE PATH
-            end_v = p[-1]
+            v = p[-1]
             # IF VERTEX = TARGET, RETURN PATH
-            if end_v == destination_vertex:
+            if v == destination_vertex:
                 return p
             # If that vertex has not been visited...
-            else:
+            if v not in visited:
                 # Mark it as visited
-                visited.add(p)
+                visited.add(v)
                 # Then add A PATH TO all of its neighbors to the back of the queue
-                
+                for neighbor in self.vertices[v]:
                     # Copy the path
                     # Append the neighbor to the back of the copy
                     # Enqueue copy
-        pass  # TODO
+                    p.append(neighbor)
+                    if p[-1] == destination_vertex:
+                        return p
+                    q.enqueue(p)
+        '''
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        s = Stack()
+        s.push((starting_vertex, [starting_vertex]))
+        while s.size() > 0:
+            (vertex, path) = s.pop()
+            for neighbor in self.vertices[vertex] - set(path):
+                if neighbor == destination_vertex:
+                    return path + [neighbor]
+                else:
+                    s.push((neighbor, path + [neighbor]))
+
 
 
 
