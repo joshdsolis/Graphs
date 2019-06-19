@@ -31,14 +31,10 @@ def earliest_ancestor(family_list, child):
                     # Enqueue copy
                     path_copy.append(neighbor)
                     q.append(path_copy)
-    print(vertices)
-
     if path_copy:
         return path_copy[-1]
     else:
         return -1
-    #return path_copy[-1]
-
 
 
 test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
